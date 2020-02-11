@@ -18,7 +18,7 @@ class CPM(nn.Module):
 		self.conv2_stage1 = nn.Conv2d(128, 128, kernel_size=9, padding=4)
 		self.pool2_stage1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 		self.conv3_stage1 = nn.Conv2d(128, 128, kernel_size=9, padding=4)
-		self.pool3_stage = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+		self.pool3_stage1 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
 		self.conv4_stage1 = nn.Conv2d(128, 32, kernel_size=5, padding=2)
 		self.conv5_stage1 = nn.Conv2d(32, 512, kernel_size=9, padding=4)
@@ -83,79 +83,79 @@ class CPM(nn.Module):
 		self.score6 = nn.Conv2d(128, self.k + 1, kernel_size=1, padding=0)
 
 	def stage1(self, ori_image):
-		x = self.pool1_stage1(F.relu(self.conv1_stage1(ori_image)))
-		x = self.pool2_stage1(F.relu(self.conv2_stage1(x)))
-		x = self.pool3_stage1(F.relu(self.conv3_stage1(x)))
-		x = F.relu(self.conv4_stage1(x))
-		x = F.relu(self.conv5_stage1(x))
-		x = F.relu(self.conv6_stage1(x))
+		x = self.pool1_stage1(F.relu(self.conv1_stage1(ori_image), inplace=True))
+		x = self.pool2_stage1(F.relu(self.conv2_stage1(x), inplace=True))
+		x = self.pool3_stage1(F.relu(self.conv3_stage1(x), inplace=True))
+		x = F.relu(self.conv4_stage1(x), inplace=True)
+		x = F.relu(self.conv5_stage1(x), inplace=True)
+		x = F.relu(self.conv6_stage1(x), inplace=True)
 		x = self.score1(x)
 
 		return x
 
 	def stage2(self, feature_image, score_1, pool_center_map):
-		x = F.relu(self.conv4_stage2(feature_image))
+		x = F.relu(self.conv4_stage2(feature_image), inplace=True)
 		x = torch.cat([x, score_1, pool_center_map], dim=1)
-		x = F.relu(self.concat_stage2(x))
-		x = F.relu(self.conv5_stage2(x))
-		x = F.relu(self.conv6_stage2(x))
-		x = F.relu(self.conv7_stage2(x))
+		x = F.relu(self.concat_stage2(x), inplace=True)
+		x = F.relu(self.conv5_stage2(x), inplace=True)
+		x = F.relu(self.conv6_stage2(x), inplace=True)
+		x = F.relu(self.conv7_stage2(x), inplace=True)
 		x = self.score2(x)
 
 		return x
 
 	def stage3(self, feature_image, score_2, pool_center_map):
-		x = F.relu(self.conv1_stage3(feature_image))
+		x = F.relu(self.conv1_stage3(feature_image), inplace=True)
 		x = torch.cat([x, score_2, pool_center_map], dim=1)
-		x = F.relu(self.concat_stage3(x))
-		x = F.relu(self.conv2_stage3(x))
-		x = F.relu(self.conv3_stage3(x))
-		x = F.relu(self.conv4_stage3(x))
+		x = F.relu(self.concat_stage3(x), inplace=True)
+		x = F.relu(self.conv2_stage3(x), inplace=True)
+		x = F.relu(self.conv3_stage3(x), inplace=True)
+		x = F.relu(self.conv4_stage3(x), inplace=True)
 		x = self.score3(x)
 
 		return x
 
 	def stage4(self, feature_image, score_3, pool_center_map):
-		x = F.relu(self.conv1_stage4(feature_image))
+		x = F.relu(self.conv1_stage4(feature_image), inplace=True)
 		x = torch.cat([x, score_3, pool_center_map], dim=1)
-		x = F.relu(self.concat_stage4(x))
-		x = F.relu(self.conv2_stage4(x))
-		x = F.relu(self.conv3_stage4(x))
-		x = F.relu(self.conv4_stage4(x))
+		x = F.relu(self.concat_stage4(x), inplace=True)
+		x = F.relu(self.conv2_stage4(x), inplace=True)
+		x = F.relu(self.conv3_stage4(x), inplace=True)
+		x = F.relu(self.conv4_stage4(x), inplace=True)
 		x = self.score4(x)
 
 		return x
 
 	def stage5(self, feature_image, score_4, pool_center_map):
-		x = F.relu(self.conv1_stage5(feature_image))
+		x = F.relu(self.conv1_stage5(feature_image), inplace=True)
 		x = torch.cat([x, score_4, pool_center_map], dim=1)
-		x = F.relu(self.concat_stage5(x))
-		x = F.relu(self.conv2_stage5(x))
-		x = F.relu(self.conv3_stage5(x))
-		x = F.relu(self.conv4_stage5(x))
+		x = F.relu(self.concat_stage5(x), inplace=True)
+		x = F.relu(self.conv2_stage5(x), inplace=True)
+		x = F.relu(self.conv3_stage5(x), inplace=True)
+		x = F.relu(self.conv4_stage5(x), inplace=True)
 		x = self.score5(x)
 
 		return x
 
 	def stage6(self, feature_image, score_5, pool_center_map):
-		x = F.relu(self.conv1_stage6(feature_image))
+		x = F.relu(self.conv1_stage6(feature_image), inplace=True)
 		x = torch.cat([x, score_5, pool_center_map], dim=1)
-		x = F.relu(self.concat_stage6(x))
-		x = F.relu(self.conv2_stage6(x))
-		x = F.relu(self.conv3_stage6(x))
-		x = F.relu(self.conv4_stage6(x))
+		x = F.relu(self.concat_stage6(x), inplace=True)
+		x = F.relu(self.conv2_stage6(x), inplace=True)
+		x = F.relu(self.conv3_stage6(x), inplace=True)
+		x = F.relu(self.conv4_stage6(x), inplace=True)
 		x = self.score6(x)
 
 		return x
 
 	def middle(self, image):
-		x = self.pool1_stage2(F.relu(self.conv1_stage2(image)))
-		x = self.pool2_stage2(F.relu(self.conv2_stage2(x)))
-		x = self.pool3_stage2(F.relu(self.conv3_stage2(x)))
+		x = self.pool1_stage2(F.relu(self.conv1_stage2(image), inplace=True))
+		x = self.pool2_stage2(F.relu(self.conv2_stage2(x), inplace=True))
+		x = self.pool3_stage2(F.relu(self.conv3_stage2(x), inplace=True))
 
 		return x
 
-	def network(self, image, center_map):
+	def forward(self, image, center_map):
 		pool_center_map = self.pool_center(center_map)
 
 		score_1 = self.stage1(image)

@@ -43,6 +43,8 @@ def read_mat(mode, path, image_list):
 		limits = np.transpose(mat_arr, (2, 1, 0))
 
 	if mode == 'lsp':
+		# Guarantee z = 1 means the key points is not blocked
+		mat_arr[2] = np.logical_not(mat_arr[2])
 		key_point_list = np.transpose(mat_arr, (2, 1, 0)).tolist()
 		# Calculate the limits to find center points
 		limits = np.transpose(mat_arr, (2, 0, 1))

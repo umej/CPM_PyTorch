@@ -1,5 +1,6 @@
 import cv2
 import random
+import numbers
 import numpy as np
 
 
@@ -12,21 +13,26 @@ def resize_image_points(image, key_points, center_points, ratio):
 	:param ratio: The ratio used to resize image and points.
 	:return: Resized image, key points and center points
 	"""
-	"""     Todo: Whether to guarantee the width to be at least 64 pix."""
-	# h, w, _ = image.shape
-	#
-	# if w < 64:
-	# 	image = cv2.copyMakeBorder(image, 0, 0, 0, 64 - w, cv2.BORDER_CONSTANT, value=(128, 128, 128))
-	# 	w = 64
+	if isinstance(ratio, numbers.Number):
+		# Train
+		num = len(key_points)
+		for i in range(num):
+			key_points[i][0] *= ratio
+			key_points[i][1] *= ratio
+		center_points[0] *= ratio
+		center_points[1] *= ratio
 
-	num = len(key_points)
-	for i in range(num):
-		key_points[i][0] *= ratio
-		key_points[i][1] *= ratio
-	center_points[0] *= ratio
-	center_points[1] *= ratio
+		return cv2.resize(image, (0, 0), fx=ratio, fy=ratio), key_points, center_points
+	else:
+		# Validation
+		num = len(key_points)
+		for i in range(num):
+			key_points[i][0] *= ratio[0]
+			key_points[i][1] *= ratio[1]
+		center_points[0] *= ratio[0]
+		center_points[1] *= ratio[1]
 
-	return cv2.resize(image, (0, 0), fx=ratio, fy=ratio), key_points, center_points
+		return cv2.resize(image, (368, 368), interpolation=cv2.INTER_CUBIC), key_points, center_points
 
 
 class RandomResized(object):
@@ -47,6 +53,17 @@ class RandomResized(object):
 		"""
 		random_scale = random.uniform(self.scale_min, self.scale_max)
 		ratio = random_scale / scale
+
+		return resize_image_points(image, key_points, center_points, ratio)
+
+
+class TestResized(object):
+	def __init__(self, size):
+		self.size = (size, size)
+
+	def __call__(self, image, key_points, center_points):
+		height, width, _ = image.shape
+		ratio = ((self.size[0] * 1.0) / width, (self.size[1] * 1.0) / height)
 
 		return resize_image_points(image, key_points, center_points, ratio)
 
