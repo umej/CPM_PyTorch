@@ -5,6 +5,9 @@ import cpm
 import torch.utils.data.dataloader
 import torch.nn as nn
 
+training_dataset_path = 'F:/Python/PyCharmWorkspace/CPM/lspet/'
+val_data_path = 'F:/Python/PyCharmWorkspace/CPM/lsp/'
+
 criterion = nn.MSELoss().cuda()
 
 model = cpm.CPM(k=14).cuda()
@@ -20,7 +23,7 @@ while epoch < 20:
 	print('epoch ', epoch)
 	"""--------Train--------"""
 	# Training data
-	data = LSP_DATA('lspet', 'F:/Python/PyCharmWorkspace/CPM/lspet/', 8, Compose([RandomResized(), RandomCrop(368)]))
+	data = LSP_DATA('lspet', training_dataset_path, 8, Compose([RandomResized(), RandomCrop(368)]))
 	train_loader = torch.utils.data.dataloader.DataLoader(data, batch_size=8)
 	for j, data in enumerate(train_loader):
 		inputs, heatmap, centermap = data
@@ -55,7 +58,7 @@ while epoch < 20:
 	# Validation
 	print('-----------Validation-----------')
 	# Validation data
-	data = LSP_DATA('lsp', 'F:/Python/PyCharmWorkspace/CPM/lsp/', 8, Compose([TestResized(368)]))
+	data = LSP_DATA('lsp', val_data_path, 8, Compose([TestResized(368)]))
 	val_loader = torch.utils.data.dataloader.DataLoader(data, batch_size=8)
 
 	model.eval()
