@@ -13,7 +13,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
 train_losses = AverageMeter()
 val_losses = AverageMeter()
-min_losses = 999
+min_losses = 999.0
 
 epoch = 0
 while epoch < 20:
@@ -91,6 +91,7 @@ while epoch < 20:
 	if val_losses.avg < min_losses:
 		# Save best model
 		model.save(model, 'best_cpm.pth')
+		min_losses = val_losses.avg
 
 	model.train()
 
