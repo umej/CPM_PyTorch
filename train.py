@@ -90,7 +90,7 @@ while epoch < 20:
 	print('Validation Loss: ', val_losses.avg)
 	if val_losses.avg < min_losses:
 		# Save best model
-		model.save(model, 'best_cpm.pth')
+		torch.save(model, 'best_cpm.pth')
 		min_losses = val_losses.avg
 
 	model.train()
