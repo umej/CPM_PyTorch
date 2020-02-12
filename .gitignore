@@ -1,6 +1,10 @@
 .gitignore
 .idea/
 lsp_dataset.zip
-lsp_dataset/
 lspet_dataset.zip
-lspet_dataset/
+__pycache__/
+best_cpm.pth
+cpm.pth
+lsp/
+lspet/
+test_data/
