@@ -5,26 +5,24 @@ import cpm
 import torch.utils.data.dataloader
 import torch.nn as nn
 
-# Validation data
-# data = LSP_DATA('lsp', 'F:/Python/PyCharmWorkspace/CPM/lsp/', 8, Compose([TestResized(368)]))
-# val_loader = torch.utils.data.dataloader.DataLoader(data, batch_size=8)
-
 criterion = nn.MSELoss().cuda()
 
 model = cpm.CPM(k=14).cuda()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
-losses = AverageMeter()
+train_losses = AverageMeter()
+val_losses = AverageMeter()
+min_losses = 999
 
-i = 0
-while i < 10:
-	print('epoch ', i)
+epoch = 0
+while epoch < 20:
+	print('epoch ', epoch)
+	"""--------Train--------"""
 	# Training data
 	data = LSP_DATA('lspet', 'F:/Python/PyCharmWorkspace/CPM/lspet/', 8, Compose([RandomResized(), RandomCrop(368)]))
 	train_loader = torch.utils.data.dataloader.DataLoader(data, batch_size=8)
 	for j, data in enumerate(train_loader):
-		print('batch', j)
 		inputs, heatmap, centermap = data
 
 		inputs = inputs.cuda()
@@ -45,17 +43,23 @@ while i < 10:
 		loss6 = criterion(heat6, heatmap_var)
 
 		loss = loss1 + loss2 + loss3 + loss4 + loss5 + loss6
-		losses.update(loss.item(), inputs.size(0))
+		train_losses.update(loss.item(), inputs.size(0))
 
 		optimizer.zero_grad()
 		loss.backward()
 		optimizer.step()
-	# print('Train Loss: ', losses.avg)
+	print('Train Loss: ', train_losses.avg)
+	torch.save(model, 'cpm.pth')
 
-	"""
+	'''--------Validation--------'''
 	# Validation
 	print('-----------Validation-----------')
+	# Validation data
+	data = LSP_DATA('lsp', 'F:/Python/PyCharmWorkspace/CPM/lsp/', 8, Compose([TestResized(368)]))
+	val_loader = torch.utils.data.dataloader.DataLoader(data, batch_size=8)
+
 	model.eval()
+
 	for j, data in enumerate(val_loader):
 		inputs, heatmap, centermap = data
 
@@ -77,13 +81,17 @@ while i < 10:
 		loss6 = criterion(heat6, heatmap_var)
 
 		loss = loss1 + loss2 + loss3 + loss4 + loss5 + loss6
-		losses.update(loss.item(), inputs.size(0))
+		val_losses.update(loss.item(), inputs.size(0))
 
 		optimizer.zero_grad()
 		loss.backward()
 		optimizer.step()
-		# print('Validation Loss: ', losses.avg)
+
+	print('Validation Loss: ', val_losses.avg)
+	if val_losses.avg < min_losses:
+		# Save best model
+		model.save(model, 'best_cpm.pth')
+
 	model.train()
-	"""
-	torch.save(model, 'cpm.pth')
-	i += 1
+
+	epoch += 1

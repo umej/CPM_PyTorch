@@ -109,21 +109,21 @@ class LSP_DATA(torch.utils.data.Dataset):
 			x = int(key_points[i][0]) * 1.0 / self.stride
 			y = int(key_points[i][1]) * 1.0 / self.stride
 
-			temp = gaussian_kernel(size_h=size_h, size_w=size_w, center_x=x, center_y=y, sigma=self.sigma)
-			temp[temp > 1] = 1
-			temp[temp < 0.01] = 0
-			heatmap[:, :, i + 1] = temp
+			kernel = gaussian_kernel(size_h=size_h, size_w=size_w, center_x=x, center_y=y, sigma=self.sigma)
+			kernel[kernel > 1] = 1
+			kernel[kernel < 0.01] = 0
+			heatmap[:, :, i + 1] = kernel
 
 		# Generate the heatmap of background
 		heatmap[:, :, 0] = 1.0 - np.max(heatmap[:, :, 1:], axis=2)
 
 		# Generate centermap
 		centermap = np.zeros((h, w, 1), dtype=np.float32)
-		temp = gaussian_kernel(size_h=h, size_w=w, center_x=center_points[0], center_y=center_points[1],
+		kernel = gaussian_kernel(size_h=h, size_w=w, center_x=center_points[0], center_y=center_points[1],
 		                       sigma=self.sigma)
-		temp[temp > 1] = 1
-		temp[temp < 0.01] = 0
-		centermap[:, :, 0] = temp
+		kernel[kernel > 1] = 1
+		kernel[kernel < 0.01] = 0
+		centermap[:, :, 0] = kernel
 
 		image -= image.mean()
 
