@@ -7,4 +7,3 @@ model/best_cpm.pth
 model/cpm.pth
 lsp/
 lspet/
-test_data/

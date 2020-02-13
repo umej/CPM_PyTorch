@@ -69,7 +69,7 @@ def draw_image(image, key_points):
 		start = key_points[limb[0]]
 		end = key_points[limb[1]]
 		color = (0, 0, 255)  # BGR
-		cv2.line(image, tuple(start), tuple(end), color, thickness=3, lineType=4)
+		cv2.line(image, tuple(start), tuple(end), color, thickness=1, lineType=4)
 
 	return image
 
@@ -77,7 +77,7 @@ def draw_image(image, key_points):
 if __name__ == "__main__":
 	model = torch.load('../model/best_cpm.pth').cuda()
 
-	image_path = '../test_data/test.jpg'
+	image_path = '../test_data/test4.jpg'
 	image = cv2.imread(image_path)
 	height, width, _ = image.shape
 	image = np.asarray(image, dtype=np.float32)
@@ -109,3 +109,5 @@ if __name__ == "__main__":
 
 	cv2.imshow('test image', image)
 	cv2.waitKey(0)
+
+	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_ans.jpg', image)

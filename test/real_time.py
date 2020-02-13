@@ -5,7 +5,6 @@ import torchvision.transforms.functional as F
 from preprocess.gen_data import gaussian_kernel
 from test.test_cpm import get_key_points, draw_image
 
-
 if __name__ == "__main__":
 	model = torch.load('../model/best_cpm.pth').cuda()
 
