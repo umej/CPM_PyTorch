@@ -3,8 +3,8 @@
 lsp_dataset.zip
 lspet_dataset.zip
 __pycache__/
-best_cpm.pth
-cpm.pth
+model/best_cpm.pth
+model/cpm.pth
 lsp/
 lspet/
 test_data/
