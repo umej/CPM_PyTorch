@@ -1,4 +1,5 @@
 import cv2
+import time
 import torch
 import numpy as np
 import torchvision.transforms.functional as F
@@ -11,6 +12,7 @@ if __name__ == "__main__":
 	capture = cv2.VideoCapture(0)
 
 	while (True):
+		start_time = time.time()
 		ret, image = capture.read()
 		ori_image = image
 
@@ -41,6 +43,12 @@ if __name__ == "__main__":
 		key_points = get_key_points(heat6, height=height, width=width)
 
 		image = draw_image(ori_image, key_points)
+
+		# calculate fps
+		end_time = time.time()
+		second = end_time - start_time
+		fps = 1 / second
+		print('fps:', fps)
 
 		cv2.imshow('real time', image)
 		if cv2.waitKey(1) & 0xFF == ord('q'):
