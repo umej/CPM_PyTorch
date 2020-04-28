@@ -19,6 +19,8 @@ cuDNN == 7.0
   ```shell
   python train_cpm/train.py
   ```
+  
+Pre-trained model is here: [Google Drive](https://drive.google.com/file/d/11KofezRfstDfLWiHeDD8_FzoIZ2j5Pfi/view?usp=sharing)
 ## Test
 You can download some images to test this CPM model. The size of image is not fixed. After downloading, modify the the path of test image in **test/test_cpm.py**.
 To show running results:
@@ -29,7 +31,9 @@ Then the model estimation result will be shown and saved.
 To shown real-time estimation:
 ```shell
 python test/real_time.py
-``` 
+```
+The **FPS** of model is 4. 
+
 ## Demo
 Here are some model estimation results. The test images are from *test_data*.
 |![test1.jpg](./test_data/test1.jpg)|![test2.jpg](./test_data/test2.jpg)|![test3.jpg](./test_data/test3.jpg)|![test4.jpg](./test_data/test4.jpg)|
