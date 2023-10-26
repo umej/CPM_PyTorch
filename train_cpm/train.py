@@ -1,6 +1,6 @@
 from preprocess.gen_data import LSP_DATA
 from preprocess.Transformers import Compose, RandomCrop, RandomResized, TestResized
-from train_cpm.utils import AverageMeter
+from utils import AverageMeter
 from cpm import cpm
 import torch.utils.data.dataloader
 import torch.nn as nn
