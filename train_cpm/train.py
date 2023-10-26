@@ -11,9 +11,9 @@ if __name__ == "__main__":
 	model_save_path = '/model/cpm.pth'
 	best_model_path = '/model/best_cpm.pth'
 
-	criterion = nn.MSELoss().cuda()
+	criterion = nn.MSELoss().cpu()
 
-	model = cpm.CPM(k=14).cuda()
+	model = cpm.CPM(k=14).cpu()
 
 	optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
@@ -31,9 +31,9 @@ if __name__ == "__main__":
 		for j, data in enumerate(train_loader):
 			inputs, heatmap, centermap = data
 
-			inputs = inputs.cuda()
-			heatmap = heatmap.cuda()
-			centermap = centermap.cuda()
+			inputs = inputs.cpu()
+			heatmap = heatmap.cpu()
+			centermap = centermap.cpu()
 
 			input_var = torch.autograd.Variable(inputs)
 			heatmap_var = torch.autograd.Variable(heatmap)
@@ -69,9 +69,9 @@ if __name__ == "__main__":
 		for j, data in enumerate(val_loader):
 			inputs, heatmap, centermap = data
 
-			inputs = inputs.cuda()
-			heatmap = heatmap.cuda()
-			centermap = centermap.cuda()
+			inputs = inputs.cpu()
+			heatmap = heatmap.cpu()
+			centermap = centermap.cpu()
 
 			input_var = torch.autograd.Variable(inputs)
 			heatmap_var = torch.autograd.Variable(heatmap)
