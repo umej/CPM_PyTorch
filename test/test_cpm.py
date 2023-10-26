@@ -107,7 +107,4 @@ if __name__ == "__main__":
 
 	image = draw_image(cv2.imread(image_path), key_points)
 
-	cv2.imshow('test image', image)
-	cv2.waitKey(0)
-
 	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_ans.jpg', image)
