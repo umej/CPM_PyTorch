@@ -32,8 +32,8 @@ if __name__ == "__main__":
 			inputs, heatmap, centermap = data
 
 			inputs = inputs.cuda()
-			heatmap = heatmap.cuda(async=True)
-			centermap = centermap.cuda(async=True)
+			heatmap = heatmap.cuda()
+			centermap = centermap.cuda()
 
 			input_var = torch.autograd.Variable(inputs)
 			heatmap_var = torch.autograd.Variable(heatmap)
