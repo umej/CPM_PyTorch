@@ -15,7 +15,7 @@ def read_dataset(path):
 	:param path: The path of dataset.
 	:return: The list of filenames.
 	"""
-	image_list = glob.glob(os.path.join(path, '*.png'))
+	image_list = sorted(glob.glob(os.path.join(path, '*.png')))
 	print("test : ")
 	print(image_list)
 
@@ -58,8 +58,8 @@ def read_mat(mode, path, image_list):
 	for i in range(len(image_list)):
 		image = cv2.imread(image_list[i])
 
-		w = image.shape[0]
-		h = image.shape[1]
+		h = image.shape[0]
+		w = image.shape[1]
 
 		# Calculate the center points of each image
 		center_x = (limits[i][0][limits[i][0] > 0].min() + limits[i][0][limits[i][0] < w].max()) / 2
