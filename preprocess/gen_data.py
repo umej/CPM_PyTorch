@@ -16,7 +16,6 @@ def read_dataset(path):
 	:return: The list of filenames.
 	"""
 	image_list = glob.glob(os.path.join(path, 'images/*.png'))
-	print(image_list.shape[0])
 
 	return image_list
 
