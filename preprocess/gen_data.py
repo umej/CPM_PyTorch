@@ -16,8 +16,6 @@ def read_dataset(path):
 	:return: The list of filenames.
 	"""
 	image_list = sorted(glob.glob(os.path.join(path, '*.png')))
-	print("test : ")
-	print(image_list)
 
 	return image_list
 
@@ -53,7 +51,6 @@ def read_mat(mode, path, image_list):
 
 	center_point_list = []
 	scale_list = []
-	print("test2 : ")
 
 	for i in range(len(image_list)):
 		image = cv2.imread(image_list[i])
@@ -83,7 +80,6 @@ def gaussian_kernel(size_w, size_h, center_x, center_y, sigma):
 
 class LSP_DATA(torch.utils.data.Dataset):
 	def __init__(self, mode, path, stride, transformer=None):
-		print(path)
 		self.image_list = read_dataset(path)
 		self.key_point_list, self.center_point_list, self.scale_list = read_mat(mode, path, self.image_list)
 		self.stride = stride
