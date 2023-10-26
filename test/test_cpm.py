@@ -75,7 +75,7 @@ def draw_image(image, key_points):
 
 
 if __name__ == "__main__":
-	model = torch.load('../model/best_cpm.pth').cuda()
+	model = torch.load('../model/best_cpm.pth').cpu()
 
 	image_path = '../test_data/test4.jpg'
 	image = cv2.imread(image_path)
@@ -95,8 +95,8 @@ if __name__ == "__main__":
 	centermap[:, :, 0] = kernel
 	centermap = torch.from_numpy(np.transpose(centermap, (2, 0, 1)))
 
-	image = torch.unsqueeze(image, 0).cuda()
-	centermap = torch.unsqueeze(centermap, 0).cuda()
+	image = torch.unsqueeze(image, 0).cpu()
+	centermap = torch.unsqueeze(centermap, 0).cpu()
 
 	model.eval()
 	input_var = torch.autograd.Variable(image)
