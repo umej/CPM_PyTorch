@@ -6,8 +6,8 @@ import torch.utils.data.dataloader
 import torch.nn as nn
 
 if __name__ == "__main__":
-	training_dataset_path = 'F:/Python/PyCharmWorkspace/CPM/lspet/'
-	val_data_path = 'F:/Python/PyCharmWorkspace/CPM/lsp/'
+	training_dataset_path = 'lspet/'
+	val_data_path = 'lsp/'
 	model_save_path = '/model/cpm.pth'
 	best_model_path = '/model/best_cpm.pth'
 
