@@ -75,7 +75,7 @@ def draw_image(image, key_points):
 
 
 if __name__ == "__main__":
-	model = torch.load('../model/best_cpm.pth').cpu()
+	model = torch.load('../model/best_cpm.pth', map_location='cpu').cpu()
 
 	image_path = '../test_data/test4.jpg'
 	image = cv2.imread(image_path)
