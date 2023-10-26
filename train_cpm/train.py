@@ -31,7 +31,7 @@ if __name__ == "__main__":
 		# Training data
 
 		image_list = glob.glob(os.path.join(training_dataset_path, '*.png'))
-		print(image_list)
+		print(len(image_list))
 
 		data = LSP_DATA('lspet', training_dataset_path, 8, Compose([RandomResized(), RandomCrop(368)]))
 		train_loader = torch.utils.data.dataloader.DataLoader(data, batch_size=8)
