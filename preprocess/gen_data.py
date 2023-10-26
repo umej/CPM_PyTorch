@@ -55,7 +55,7 @@ def read_mat(mode, path, image_list):
 	scale_list = []
 	print("test2 : ")
 
-	for i in range(limits.shape[0]):
+	for i in range(len(image_list)):
 		image = cv2.imread(image_list[i])
 
 		h = image.shape[0]
