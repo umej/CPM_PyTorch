@@ -106,8 +106,8 @@ if __name__ == "__main__":
 	key_points = get_key_points(heat6, height=height, width=width)
 
 	heat6img = np.asarray(heat6.cpu().data)[0]
-	print(heat6img)
-	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat6.png', heat6img[0,:])
+	heat6img = heat6img * 256
+	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat6.png', heat6img[0,:,:])
 	
 	image = draw_image(cv2.imread(image_path), key_points)
 
