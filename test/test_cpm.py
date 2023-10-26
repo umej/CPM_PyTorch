@@ -104,11 +104,6 @@ if __name__ == "__main__":
 
 	heat1, heat2, heat3, heat4, heat5, heat6 = model(input_var, center_var)
 	key_points = get_key_points(heat6, height=height, width=width)
-	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat1.png', heat1)
-	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat2.png', heat2)
-	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat3.png', heat3)
-	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat4.png', heat4)
-	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat5.png', heat5)
 	cv2.imwrite(image_path.rsplit('.', 1)[0] + '_heat6.png', heat6)
 	
 	image = draw_image(cv2.imread(image_path), key_points)
